@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  grpc-app:
+    build:
+      dockerfile: ./build/Dockerfile
+      context: ./
+    container_name: grpc-app
+    volumes:
+      - /run/host-services/ssh-auth.sock:/ssh-agent
+      - ./:/app
+    working_dir: /app
+    ports:
+      - 3000
+    env_file: ./.env
+    environment:
+      - SSH_AUTH_SOCK=/ssh-agent
+    entrypoint: bash -c "/usr/local/bin/entrypoint.sh && air -c ./cmd/grpc/.air.toml"
