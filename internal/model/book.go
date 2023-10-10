@@ -64,10 +64,6 @@ func NewBookFromProto(proto *book.Book) (b *Book, err error) {
 	b.Publisher = proto.GetPublisher()
 	b.CreatedAt = proto.GetCreatedAt().AsTime()
 	b.UpdatedAt = proto.GetUpdatedAt().AsTime()
-	b.DeletedAt = gorm.DeletedAt{
-		Time:  proto.GetDeletedAt().AsTime(),
-		Valid: !proto.GetDeletedAt().AsTime().IsZero(),
-	}
 
 	return b, nil
 }

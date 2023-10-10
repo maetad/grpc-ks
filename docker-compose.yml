@@ -30,3 +30,21 @@ services:
     environment:
       - SSH_AUTH_SOCK=/ssh-agent
     entrypoint: bash -c "/usr/local/bin/entrypoint.sh && air -c ./cmd/rest/.air.toml"
+  client-app:
+    build:
+      dockerfile: ./build/Dockerfile
+      context: ./
+    container_name: client-app
+    volumes:
+      - /run/host-services/ssh-auth.sock:/ssh-agent
+      - ./:/app
+    working_dir: /app
+    ports:
+      - 3100:3100
+    env_file: ./.env
+    environment:
+      - SSH_AUTH_SOCK=/ssh-agent
+    entrypoint: bash -c "/usr/local/bin/entrypoint.sh && air -c ./cmd/client/.air.toml"
+    depends_on:
+      - rest-app
+      - grpc-app
