@@ -12,14 +12,14 @@ import (
 )
 
 type Book struct {
-	ID        uuid.UUID `gorm:"primarykey"`
-	Title     string
-	Author    string
-	Isbn      string
-	Publisher string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
+	ID        uuid.UUID      `gorm:"primarykey" json:"id"`
+	Title     string         `json:"title"`
+	Author    string         `json:"author"`
+	Isbn      string         `json:"isbn"`
+	Publisher string         `json:"publisher"`
+	CreatedAt time.Time      `json:"createdAt"`
+	UpdatedAt time.Time      `json:"updatedAt"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"deletedAt"`
 }
 
 func (b Book) GetResourceName() string {
